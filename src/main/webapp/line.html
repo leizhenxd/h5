@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>HTML5</title>
+<script type="text/javascript">
+	
+	
+	
+	var canvas ;
+	
+	function load(){
+		canvas = document.getElementById("myCanvas");
+		var width = canvas.width;
+		var height = canvas.height;
+		var ctx = canvas.getContext("2d");
+// 		for(var i=1; i<width; i+=3) {
+// 			for(var j=1; j<height; j+=3) {
+// 				ctx.fillStyle="rgb(155,"+i%255+","+j%255+")";  //填充的颜色
+// // 				ctx.strokeStyle="000";  //边框颜色
+// 				ctx.fillRect(i,j, 3, 3);
+// 			}
+// 		}
+// 		 var imageData = ctx.getImageData(200, 200, 10, 10);
+// 		 var pixel = imageData.data;
+// 		 var pixcolor = "rgba(" + pixel[0] + "," + pixel[1] + "," + pixel[2] + "," + pixel[3] + ")";
+// 		console.log(pixel);
+
+		var image = new Image("");
+		image.src = "dog1.png";
+// 		var newCanvas = document.createElement("canvas");
+// 		newCanvas.width = 330;
+		ctx.drawImage(image,0,0);
+		
+		var y = 1998-330;
+		var t = setInterval(function(){
+			if(y == 0)
+				clearInterval(t);
+			ctx.clearRect(0,0,330,330);
+			ctx.drawImage(image,0,y-=2,330,330,0,0,330,330);
+		}, 10);
+		
+// 		var y = 1998-330;
+// 		console.log(window.requestAnimationFrame);
+// 		var t = window.requestAnimationFrame(step);
+		
+// 		function step() {
+// 			if(y == 0)
+// 				window.cancelAnimationFrame(step);
+// 			ctx.clearRect(0,0,330,330);
+// 			ctx.drawImage(image,0,y--,330,330,0,0,330,330);
+// 			window.requestAnimationFrame(step, 10);
+// 		}
+	}
+	
+</script>
+</head>
+<body onLoad="load()">
+	<canvas id="myCanvas" width="330" height="330"
+		style="border: 1px solid #c3c3c3;">
+	Your browser does not support the canvas element.
+	</canvas>
+	<img style="display: none" src="dog.jpg" />
+	<img style="display: none" src="dog1.png" />
+</body>
+</html>

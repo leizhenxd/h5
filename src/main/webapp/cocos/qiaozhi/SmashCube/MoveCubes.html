@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>three.js webgl - draggable cubes</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <style>
+        body {
+            font-family: Monospace;
+            background-color: #f0f0f0;
+            margin: 0px;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+
+<script src="libs/three.min.js"></script>
+
+<script src="libs/TrackballControls.js"></script>
+
+<script src="libs/stats.min.js"></script>
+
+<script src="libs/threex.dynamictexture.js"></script>
+
+<div id="hammer"
+     style="height:128px; width:128px; background-image:url('Hammer.png');  position:absolute; bottom:128px; left:0px; z-index:2; backgroundRepeat:no-repeat;"
+     onmousedown="hammerTime()" onmouseup="release()"></div>
+<div id="brush"
+     style="height:128px; width:128px; background-image:url('Brush.png');  position:absolute; bottom:0px; left:0px; z-index:2;backgroundRepeat:no-repeat;"
+     onmousedown="brushTime()" onmouseup="release()"></div>
+<div id="roundh"
+     style="height:128px; width:128px; background-image:url('Round.png');  position:absolute; bottom:128px; left:0px; z-index:3;backgroundRepeat:no-repeat; display: none"
+     onmousedown="hammerTime()" onmouseup="release()"></div>
+<div id="roundb"
+     style="height:128px; width:128px; background-image:url('Round.png');  position:absolute; bottom:0px; left:0px; z-index:3;backgroundRepeat:no-repeat; display: none"
+     onmousedown="brushTime()" onmouseup="release()"></div>
+<script src="model/model1_1.js"></script>
+<script src="js/SmashCube.js"></script>
+
+</body>
+</html>

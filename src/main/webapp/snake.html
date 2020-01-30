@@ -1,0 +1,241 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>HTML5</title>
+<script type="text/javascript">
+	
+	var rowNum = 0, cellNum = 0;
+	// 网格宽高
+	var gridWidth = 10, gridHeight = 10;
+	
+	// 当前移动方向
+	var direction = "D";
+	
+	// 蛇身方块对象
+	function snakeObj(){
+		this.width = 0;
+		this.height = 0;
+		this.next = null;
+		this.pre = null;
+	}
+	
+	var snakeHead = new snakeObj(); // 蛇头
+	var snakeTail;
+	var randomCube; // 随机方块
+	
+	var canvas ;
+	var ctx ;
+	var timer;
+	
+	
+	var head = new Image("");
+	head.src = "images/snake/head-d.png";
+	
+	function load(){
+		canvas = document.getElementById("myCanvas");
+		ctx = canvas.getContext("2d");
+		
+		drawBG();
+		
+		var next = new snakeObj();
+		next.width = 10;
+		next.height = 0;
+		next.pre = snakeHead;
+		snakeHead.next = next;
+		snakeTail = next;
+		
+		createCube();
+// 		move();
+// 		timer = setInterval("move()", 500);
+		
+		
+		drawRandomCube();
+		
+		window.addEventListener("keypress",function(evt){
+			if(evt.charCode == 100){
+				console.log("right");
+				direction = "R";
+			}
+			if(evt.charCode == 119){
+				console.log("up");
+				direction = "U";
+			}
+			if(evt.charCode == 97){
+				console.log("left");
+				direction = "L"
+			}
+			if(evt.charCode == 115){
+				console.log("down");
+				direction = "D"
+			}
+		});
+	}
+	function move(){
+		ctx.clearRect(0,0,330,330);
+		drawBG();
+		drawRandomCube();
+		
+		 if("R" == direction) {
+			 if(snakeHead.width < (330-gridWidth)){
+				var tailPre = snakeTail.pre;
+				tailPre.next = null;
+				snakeTail.height = snakeHead.height;
+				snakeTail.width = snakeHead.width + gridWidth;
+				snakeTail.pre = null;
+				snakeTail.next = snakeHead;
+				snakeHead.pre = snakeTail;
+				snakeHead = snakeTail;
+				snakeTail = tailPre;
+			 }
+		 }
+		 if("L" == direction) {
+			 if(snakeHead.width > 0) {
+				var tailPre = snakeTail.pre;
+				tailPre.next = null;
+				snakeTail.height = snakeHead.height;
+				snakeTail.width = snakeHead.width - gridWidth;
+				snakeTail.pre = null;
+				snakeTail.next = snakeHead;
+				snakeHead.pre = snakeTail;
+				snakeHead = snakeTail;
+				snakeTail = tailPre;
+			 }
+		 }
+		 if("D" == direction) {
+			 if(snakeHead.height < (330-gridHeight)){
+				var tailPre = snakeTail.pre;
+				tailPre.next = null;
+				snakeTail.width = snakeHead.width;
+				snakeTail.height = snakeHead.height + gridHeight;
+				snakeTail.pre = null;
+				snakeTail.next = snakeHead;
+				snakeHead.pre = snakeTail;
+				snakeHead = snakeTail;
+				snakeTail = tailPre;
+			 }
+		 }
+		 if("U" == direction) {
+			 if(snakeHead.height > 0){
+				var tailPre = snakeTail.pre;
+				tailPre.next = null;
+				snakeTail.width = snakeHead.width;
+				snakeTail.height = snakeHead.height - gridHeight;
+				snakeTail.pre = null;
+				snakeTail.next = snakeHead;
+				snakeHead.pre = snakeTail;
+				snakeHead = snakeTail;
+				snakeTail = tailPre; 
+			 }
+		 }
+		 
+		 var step = snakeHead;
+			
+			while(step != null){
+				 ctx.fillStyle="#FF0000";  //填充的颜色
+				 ctx.strokeStyle="000";  //边框颜色
+				 ctx.linewidth=10;  //边框宽
+				 ctx.fillRect(step.width,step.height, gridWidth, gridHeight);  //填充颜色 x y坐标 宽 高
+				 ctx.strokeRect(step.width,step.height, gridWidth, gridHeight);  //填充边框 x y坐标 宽 高
+				 
+				 /* if(step.width == snakeHead.width && step.height == snakeHead.height){
+					 ctx.drawImage(head,step.width,step.height, gridWidth, gridHeight);
+				 } */
+				 
+				 step = step.next;
+			}
+		 
+		 eatCube();
+		 if(isIntersect()){
+			 alert("You Died!");
+			 clearInterval(timer);
+		 }
+	}
+	function drawBG(){
+		ctx.save();
+		ctx.translate(0.5,0.5);
+		ctx.strokeStyle = "rgba(111,111,111,0.5)"
+		for(var i=gridWidth; i<330; i+=gridWidth) {
+			ctx.lineWidth=1;
+			ctx.beginPath();
+			ctx.moveTo(i, 0);
+			ctx.lineTo(i, 330);
+			ctx.stroke();
+		}
+		
+		for(var i=gridHeight; i<330; i+=gridHeight) {
+			ctx.lineWidth=1;
+			ctx.beginPath();
+			ctx.moveTo(0, i);
+			ctx.lineTo(330, i);
+			ctx.stroke();
+		}
+		ctx.restore();
+	}
+	
+	function eatCube() {
+		var nextWidth = snakeHead.width, nextHeight = snakeHead.height;
+		
+		if("R" == direction) {
+			nextWidth = snakeHead.width + gridWidth;
+		 }
+		 if("L" == direction) {
+			 nextWidth = snakeHead.width - gridWidth;
+		 }
+		 if("D" == direction) {
+			 nextHeight = snakeHead.height + gridHeight;
+		 }
+		 if("U" == direction) {
+			 nextHeight = snakeHead.height - gridHeight;
+		 }
+		
+		
+		if(nextWidth == randomCube.width && nextHeight == randomCube.height) {
+			randomCube.next = snakeHead;
+			snakeHead.pre = randomCube;
+			snakeHead = randomCube;
+			createCube();
+		}
+	}
+	
+	function drawRandomCube() {
+		ctx.fillStyle="#FFFF00";  //填充的颜色
+		ctx.strokeStyle="000";  //边框颜色
+		ctx.linewidth=10;  //边框宽
+		ctx.fillRect(randomCube.width,randomCube.height, gridWidth, gridHeight);  //填充颜色 x y坐标 宽 高
+		ctx.strokeRect(randomCube.width,randomCube.height, gridWidth, gridHeight);  //填充边框 x y坐标 宽 高
+	}
+	
+	function createCube(){
+		var cube = Object.create(snakeObj);
+		console.log(Math.floor(Math.random()*33));
+		cube.width = Math.floor(Math.random()*33) * 10;
+		cube.height = Math.floor(Math.random()*33) * 10;
+		randomCube = cube;
+	}
+	
+	function isIntersect(){
+		if(snakeHead.width <0 || snakeHead.width >= 330
+			|| snakeHead.height < 0 || snakeHead.height >= 330){
+			return true;
+		}
+		var step = snakeHead.next;
+		while(step != null && step.next != null) {
+			if(snakeHead.width == step.width && snakeHead.height == step.height){
+				return true;
+			}
+			step = step.next;
+		}
+		return false;
+	}
+</script>
+</head>
+<body onLoad="load()">
+	<canvas id="myCanvas" width="330" height="330"
+		style="border: 1px solid #c3c3c3;">
+	Your browser does not support the canvas element.
+	</canvas>
+	<img style="display: none" src="dog.jpg" />
+
+</body>
+</html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Swiper demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+
+    <!-- Link Swiper's CSS -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <link rel="stylesheet" href="../../css/swiper.min.css">
+
+    <!-- Demo styles -->
+    <style>
+    html, body {
+        position: relative;
+        height: 100%;
+    }
+    body {
+        background: #eee;
+        font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+        font-size: 14px;
+        color:#000;
+        margin: 0;
+        padding: 0;
+    }
+    .swiper-container {
+        width: 100%;
+        height: 100%;
+    }
+    .swiper-slide {
+        background-position: center;
+        background-size: cover;
+		background: #fff;
+    }
+	#cas {
+		top: 0;
+		left:0;
+		opacity: 1;
+		-webkit-transition: opacity .5s;
+		-ms-transition: opacity .5s;
+		-moz-transition: opacity .5s;
+		z-index: 2;
+		position: absolute;
+		width: 100%;
+	}
+	.noOp {
+		opacity: 0 !important;
+	}
+    </style>
+</head>
+<body>
+    <!-- Swiper -->
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+				<input type="button" id="upload" value="晏子" style="width:200px;height: 200px;"/>
+				<img alt="" src="" id="photo" width="400" height="500"/>
+			</div>
+            <div class="swiper-slide game">
+				<img src="pic1.jpg" style="position: absolute; left: 0; top: 0; width: 100%; z-index: 1; visibility: hidden;" id="bb">
+				<canvas id="cas"></canvas>
+			</div>
+            <div class="swiper-slide">33</div>
+            <div class="swiper-slide">44</div>
+        </div>
+        <!-- Add Pagination -->
+        <div class="swiper-pagination swiper-pagination-white"></div>
+        <!-- Add Arrows -->
+        <div class="swiper-button-next swiper-button-white"></div>
+        <div class="swiper-button-prev swiper-button-white"></div>
+    </div>
+
+    <!-- Swiper JS -->
+    <script src="../../js/swiper.min.js"></script>
+    <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+	<script type="text/javascript" src="../../js/wx.js"></script>
+
+    <!-- Initialize Swiper -->
+    <script>
+    var swiper = new Swiper('.swiper-container', {
+        
+        spaceBetween: 30,
+        effect: 'slide',
+		direction:'vertical',
+		updateOnImagesReady : true,
+		onImagesReady : function(swiper) {
+			// 				alert('所有内置图像加载完成后执行，同时“updateOnImagesReady”需设置为“true');
+		},
+		onSlideChangeEnd : function(swiper) {
+			if (swiper.activeIndex == 1) {
+				if(!over) {
+					$(".game").addClass("swiper-no-swiping");
+					var canvasBox = document.getElementById("bb");
+
+					canvasBox.onload = function() {
+					}
+					canvas.width = canvasBox.width;
+					canvas.height = canvasBox.height;
+					canvasBox.style.display = '';
+					var img = new Image();
+					img.src = "pic2.jpg";
+					img.onload = function() {
+						ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+						canvasBox.style.visibility = 'visible';
+						tapClip()
+					};
+				}
+			}
+		}
+    });
+    </script>
+    <script type="text/javascript" charset="utf-8">
+		var over = false;
+		var canvas = document.getElementById("cas"), ctx = canvas.getContext("2d");
+		var x1, y1, a = document.body.clientWidth / 10, timeout, totimes = 100, distance = 30;
+		var saveDot = [];
+
+		
+		function getClipArea(e, hastouch) {
+			var x = hastouch ? e.targetTouches[0].pageX : e.clientX;
+			var y = hastouch ? e.targetTouches[0].pageY : e.clientY;
+			var ndom = canvas;
+
+			// 			while(ndom.tagName!=="BODY"){
+			// 				x -= ndom.offsetLeft;
+			// 				y -= ndom.offsetTop;
+			// 				ndom = ndom.parentNode;
+			// 			}
+			return {
+				x : x,
+				y : y
+			}
+		}
+		var hastouch = "ontouchstart" in window ? true : false, tapstart = hastouch ? "touchstart"
+				: "mousedown", tapmove = hastouch ? "touchmove"
+				: "mousemove", tapend = hastouch ? "touchend" : "mouseup";
+		//通过修改globalCompositeOperation来达到擦除的效果
+		function tapClip() {
+
+			var area;
+			var x2, y2;
+
+			ctx.lineCap = "round";
+			ctx.lineJoin = "round";
+			ctx.lineWidth = a / 3;
+			ctx.globalCompositeOperation = "destination-out";
+
+			window.addEventListener(tapstart, tapstartHandler);
+		}
+
+		function tapstartHandler(e) {
+				clearTimeout(timeout);
+				e.preventDefault();
+				area = getClipArea(e, hastouch);
+				x1 = area.x;
+				y1 = area.y;
+
+				drawLine(x1, y1);
+				this.addEventListener(tapmove, tapmoveHandler);
+				this.addEventListener(tapend,function() {
+					this.removeEventListener(tapmove,tapmoveHandler);
+
+					//检测擦除状态
+					timeout = setTimeout(function() {
+						var imgData = ctx.getImageData(0,0,canvas.width,canvas.height);
+						var dd = 0;
+						for (var x = 0; x < imgData.width; x += distance) {
+							for (var y = 0; y < imgData.height; y += distance) {
+								var i = (y * imgData.width + x) * 4;
+								if (imgData.data[i + 3] > 0) {
+									dd++
+								}
+						}
+					}
+					if (dd / (imgData.width * imgData.height / (distance * distance)) < 0.4) {
+						canvas.className = "noOp";
+						$(".game").removeClass("swiper-no-swiping");
+						over = true;
+						this.removeEventListener(tapstart,tapstartHandler);
+						this.removeEventListener(tapmove,tapmoveHandler);
+					}
+				}, totimes)
+			});
+		
+			function tapmoveHandler(e) {
+				clearTimeout(timeout);
+				e.preventDefault();
+				area = getClipArea(e, hastouch);
+
+				x2 = area.x;
+				y2 = area.y;
+				drawLine(x1, y1, x2, y2);
+
+				x1 = x2;
+				y1 = y2;
+			}
+		}
+		
+		function drawLine(x1, y1, x2, y2) {
+
+			ctx.save();
+			ctx.beginPath();
+			if (arguments.length == 2) {
+				for (var i = 1; i <= 3; i++) {
+					for (var j = 1; j <= 3; j++) {
+						if (!random())
+							break;
+						var subx = x1 - a + a * i / 3;
+						var suby = y1 - a + a * j / 3;
+						ctx.arc(subx, suby, a / 3, 0, 2 * Math.PI);
+						ctx.fill();
+					}
+				}
+
+			} else {
+				for (var i = 1; i <= 3; i++) {
+					for (var j = 1; j <= 3; j++) {
+						if (!random())
+							break;
+						var subx1 = x1 - a + a * i / 3;
+						var suby1 = y1 - a + a * j / 3;
+						var subx2 = x2 - a + a * i / 3;
+						var suby2 = y2 - a + a * j / 3;
+						ctx.moveTo(subx1, suby1);
+						ctx.lineTo(subx2, suby2);
+					}
+				}
+
+				ctx.stroke();
+			}
+			ctx.restore();
+		}
+		function random() {
+			var r = parseInt(Math.random() * 3 + 1);
+			return r == 1 || r == 2;
+		}
+	</script>
+</body>
+</html>

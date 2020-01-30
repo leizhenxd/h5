@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>spineboy</key>
+	<dict>
+		<key>width</key>
+		<string>200</string>
+		<key>height</key>
+		<string>200</string>
+		<key>anchorPoint</key>
+		<string></string>
+		<key>position</key>
+		<string></string>
+	</dict>
+	<key>guanyu-S</key>
+	<dict>
+		<key>width</key>
+		<string>0</string>
+		<key>height</key>
+		<string></string>
+		<key>anchorPoint</key>
+		<string></string>
+		<key>position</key>
+		<string></string>
+	</dict>
+	<key>guanyu-R</key>
+	<dict>
+		<key>width</key>
+		<string>0</string>
+		<key>height</key>
+		<string></string>
+		<key>anchorPoint</key>
+		<string></string>
+		<key>position</key>
+		<string></string>
+	</dict>
+	<key>guanyu-I</key>
+	<dict>
+		<key>width</key>
+		<string>0</string>
+		<key>height</key>
+		<string></string>
+		<key>anchorPoint</key>
+		<string></string>
+		<key>position</key>
+		<string></string>
+	</dict>
+	<key>guanyu-H</key>
+	<dict>
+		<key>width</key>
+		<string>0</string>
+		<key>height</key>
+		<string></string>
+		<key>anchorPoint</key>
+		<string></string>
+		<key>position</key>
+		<string></string>
+	</dict>
+</dict>
+</plist>

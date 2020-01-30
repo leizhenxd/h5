@@ -1,0 +1,283 @@
+html, body {
+	position: relative;
+	height: 100%;
+}
+
+body {
+	background: #eee;
+	font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+	font-size: 14px;
+	color: #000;
+	margin: 0;
+	padding: 0;
+}
+.swiper-button-next,.swiper-button-prev {
+	top: 32%;
+}
+.swiper-container {
+	width: 100%;
+	height: 100%;
+}
+
+.swiper-slide {
+	width: 100%;
+	height: 100%;
+	text-align: center;
+}
+.swiper-slide-h {
+	width: 100%;
+	height: 100%;
+}
+.mask-container{
+	 position: relative;
+	 width: 100%;
+	 height: 100%;
+}
+
+#cas {
+	top: 0;
+	left: 0;
+	opacity: 0;
+	-webkit-transition: opacity .5s;
+	-ms-transition: opacity .5s;
+	-moz-transition: opacity .5s;
+	z-index: 2;
+	position: absolute;
+	width: 100%;
+}
+
+.noOp {
+	opacity: 0 !important;
+}
+.preTag-container {
+	position: absolute;
+	width: 100%;
+	height: 40px;
+	bottom: 10px;
+	text-align: center;
+}
+.preTag {
+	-webkit-animation: gogogo 1s infinite linear;
+	margin: 0 auto;
+	background: url("../../images/thermos/2_next.png") no-repeat;
+	background-size: 70px 30px;
+	height: 40px;
+	width: 70px;
+}
+.hpg1 {
+	background: url('../../images/thermos/frame1.jpg') no-repeat;
+	background-size: 100% 100%;
+}
+.hpg2 {
+	background: url('../../images/thermos/frame2.jpg') no-repeat;
+	background-size: 100% 100%;
+}
+.hpg3 {
+	background: url('../../images/thermos/frame3.jpg') no-repeat;
+	background-size: 100% 100%;
+}
+.hpg4 {
+	background: url('../../images/thermos/frame4.jpg') no-repeat;
+	background-size: 100% 100%;
+}
+.hpg5 {
+	background: url('../../images/thermos/frame5.jpg') no-repeat;
+	background-size: 100% 100%;
+}
+.hpg6 {
+	background: url('../../images/thermos/frame6.jpg') no-repeat;
+	background-size: 100% 100%;
+}
+.pg1 {
+	background: url("http://qiniu.leizhenxd.com/1a_bg.jpg") no-repeat;
+	background-size: 100% 100%;
+}
+.pg2b {
+	background: url("../../images/thermos/2c_bg.jpg?imageView2/2/w/480") no-repeat;
+	background-size: 100% 100%;
+}
+.pg3 {
+        background-color: white;
+}
+.pg4 {
+        background: url("../../images/thermos/4a_bg.jpg") no-repeat;
+        background-size: 100% 100%;
+}
+.pg5 {
+        background: url("../../images/thermos/5a_bg.jpg") no-repeat;
+        background-size: 100% 100%;
+}
+.pg6 {
+	background: url("../../images/thermos/6_bg.jpg") no-repeat;
+	background-size: 100% 100%;
+}
+/* .pg7 {
+	background: url("../../images/thermos/6g_bg.jpg") no-repeat;
+	background-size: 100% 100%;
+} */
+.pg8 {
+	background: url("../../images/thermos/7_bg.jpg") no-repeat;
+	background-size: 100% 100%;
+}
+.pg9 {
+	background: url("../../images/thermos/success.jpg") no-repeat;
+	background-size: 100% 100%;
+}
+@-webkit-keyframes gogogo {
+    0%{
+       opacity: 0;
+    }
+    100%{
+       opacity: 1;
+    }
+}
+
+@-webkit-keyframes loadinganim {
+   0%{
+       left: -100%;
+    }
+    100%{
+       left: 0;
+    }
+}
+
+.loading {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 1000;
+	display: none;
+}
+.foot{
+	position: absolute;
+	-webkit-animation: loadinganim 3s infinite linear;
+}
+.prizeMask, .shareMask {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 1000;
+	display: none;
+}
+.tobody {
+	position: absolute;
+	top: 62%;
+	left:65%;
+	border: none;
+	border-bottom: 1px solid gray;
+	background: none;
+	width: 30%;
+}
+.content {
+	position: absolute;
+	top: 65%;
+	left:55%;
+	border: none;
+	border-bottom: 1px solid gray;
+	background: none;
+	width: 40%;
+}
+.frombody {
+	position: absolute;
+	top: 72%;
+	left:69%;
+	border: none;
+	border-bottom: 1px solid gray;
+	background: none;
+	width: 27%;
+}
+.input {
+	display: block;
+	height: 5%;
+	font-size: 1.5em;
+	margin: 0 auto;
+	margin-top: 5%;
+	border: 1px solid gray;
+	border-radis: 5px;
+	text-indent: 10px;
+}
+.submit {
+	background: url("../../images/thermos/submit.png");
+	background-size: 100% 100%;
+	width: 100px;
+	height:100px;
+	float: left;
+}
+.resubmit {
+	background: url("../../images/thermos/resubmit.png");
+	background-size: 100% 100%;
+	width: 100px;
+	height:100px;
+	margin: 0 auto;
+}
+.prize {
+	background: url("../../images/thermos/prize.png");
+	background-size: 100% 100%;
+	width: 100px;
+	height:100px;
+	float: left;
+}
+.share {
+	background: url("../../images/thermos/share.png");
+	background-size: 100% 100%;
+	width: 100px;
+	height:100px;
+	float: left;
+}
+.store {
+	background: url("../../images/thermos/store.png");
+	background-size: 100% 100%;
+	width: 100px;
+	height:100px;
+	float: left;
+	display:inline-block;
+}
+.p8-button-wrapper {
+	border: none;
+	margin: 0 auto;
+	margin-top: 10%;
+	text-align: center;
+	position: relative;
+	width:fit-content;
+	width:-webkit-fit-content;
+	width:-moz-fit-content;
+}
+.p7-button-wrapper {
+	border: none;
+	text-align: center;
+	position: absolute;
+	width: 100%;
+	bottom: 4%;
+}
+.camera {
+	position: absolute;
+	top: 20%; 
+	left: 30%;
+	width: 40%;
+}
+
+.right {
+	position: absolute;
+	width: 50%;
+	top: 20%;
+	left: 25%;
+}
+.noupload .camera{
+	display: inline;
+}
+.noupload .right {
+	display: none;
+}
+.upload .camera{
+	display: none;
+}
+.upload .right {
+	display: inline;
+}
+.ani {
+	opacity: 0;
+}

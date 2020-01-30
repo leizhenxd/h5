@@ -1,0 +1,103 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="http://g.alicdn.com/de/prismplayer/1.4.7/skins/default/index.css" />
+  <script type="text/javascript" src="http://g.alicdn.com/de/prismplayer/1.4.7/prism.js"></script>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.js"></script>
+</head>
+<body>
+<div class="prism-player" id="J_prismPlayer"></div>
+<br/>
+<input type="button" value="stop"/>
+<script>
+	var url = "http://live.leizhenxd.com/jaguar/StreamName.m3u8";
+	
+	
+
+	var player = new prismplayer({
+		id : "J_prismPlayer",
+		source : "http://playback.leizhenxd.com/_6.m3u8",
+		autoplay : true,
+		width : "100%",
+		height : "400px",
+		cover: "http://sh.html5.tedu.cn/h5/images/bj_08.jpg",
+		isLive : false,
+		skinLayout: [
+		              {
+		                  "align":"blabs",
+		                  "x":30,
+		                  "y":80,
+		                  "name":"bigPlayButton"
+		              },{
+		                  "align":"blabs",
+		                  "x":0,
+		                  "y":0,
+		                  "name":"controlBar",
+		                  "children":[
+		                      {
+		                          "align":"tl",
+		                          "x":10,
+		                          "y":24,
+		                          "name":"timeDisplay"
+		                      },{
+		                          "align":"tr",
+		                          "x":20,
+		                          "y":25,
+		                          "name":"fullScreenButton"
+		                      },{
+		                          "align":"tr",
+		                          "x":20,
+		                          "y":25,
+		                          "name":"volume"
+		                      }
+		                  ]
+		              }
+		          ],
+		extraInfo : {
+			liveStartTime : "2016/08/17 12:00:00",
+			liveStopTime : "2016/08/17 14:00:00",
+		},
+		liveStreamStop: function(){
+			console.log("liveStreamStop");
+		},
+		m3u8Retry: function() {
+			console.log("m3u8Retry");
+		}
+	});
+	$("button").click(function(){
+		player.liveStreamStop();
+	});
+	
+// 	console.log(player._player._options.source);
+	
+	/* $.ajax({
+		url:"live/status",
+		success: function(data) {
+			console.log(data);
+		}
+	}); */
+
+	/* if (typeof (EventSource) !== "undefined") {
+		var source = new EventSource("live/status");
+		source.onmessage = function(event) {
+			if ("true" == event) {
+				if(url == player._player._options.source)
+					player.play();
+			}
+			else {
+				player.loadByUrl("");
+			}
+			//document.getElementById("result").innerHTML+=event.data + "<br />";
+		};
+		source.onerror = function(event) {
+			console.log(event);
+			console.log('error' + event.data);
+		};
+	} else {
+		console.log("get source error");
+	} */
+</script>
+</body>
+</html>

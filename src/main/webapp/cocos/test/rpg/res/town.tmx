@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="10" height="15" tilewidth="32" tileheight="32" nextobjectid="1">
+ <tileset firstgid="1" name="town" tilewidth="32" tileheight="32" tilecount="36" columns="9">
+  <image source="town.gif" width="288" height="128"/>
+  <tile id="0">
+   <properties>
+    <property name="pass" type="bool" value="false"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="pass" type="bool" value="false"/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="pass" type="bool" value="false"/>
+   </properties>
+  </tile>
+  <tile id="10">
+   <properties>
+    <property name="pass" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="28">
+   <properties>
+    <property name="pass" type="bool" value="true"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="town" width="10" height="15">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NkYGBgBGImIGYGYmUozQQVR8dMSGpxqSEGy1JZ7UCYJ0tl8wa7f0GYm0i1AHRoJtpYAgAA
+  </data>
+ </layer>
+</map>

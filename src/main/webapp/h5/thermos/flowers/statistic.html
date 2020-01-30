@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>统计</title>
+    <!--<link rel="icon" type="image/GIF" href="res/favicon.ico"/>-->
+    <div id='wx_logo' style='margin:0 auto;display:none;'>
+        <!--<img src='/res/head.jpg' />-->
+    </div>
+    <meta name="viewport" content="initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="full-screen" content="yes"/>
+    <meta name="screen-orientation" content="portrait"/>
+    <meta name="x5-fullscreen" content="true"/>
+    <meta name="360-fullscreen" content="true"/>
+    <style type="text/css">
+    	td {
+    		border : 1px solid black;
+    	}
+    </style>
+</head>
+<body>
+<table id="user">
+	<tr style="background-color: grey">
+		<td>记录类型</td>
+		<td>次数</td>
+		<td>日期</td>
+	</tr>
+	<tbody id="logtbody">
+	
+	</tbody>
+</table>
+<table id="user">
+	<tr style="background-color: grey">
+		<td>姓名</td>
+		<td>电话</td>
+		<td>邮箱</td>
+		<td>得分</td>
+		<td>创建时间</td>
+	</tr>
+	<tbody id="tbody">
+	
+	</tbody>
+</table>
+<script src="../../../js/statistic.js"></script>
+<script>
+
+statisticLog("thermos_flowers", function(e){
+	if (e.target.readyState==4 && e.target.status==200) {
+		var data = JSON.parse(e.target.responseText);
+		
+		var userHtml = "";
+		var table = document.getElementById("logtbody");
+		for(var i=0;i<data.length;i++) {
+			console.log(data[i].createTime);
+			var newRow = table.insertRow(i);
+			newRow.insertCell(0).innerHTML = data[i].type;
+			newRow.insertCell(1).innerHTML = data[i].count;
+			newRow.insertCell(2).innerHTML = data[i].logDay;
+		}
+		console.log(document.getElementById("user"));
+// 	 	document.getElementById("user").append(userHtml);	
+	}
+});	
+statisticUser(2, function(e){
+	if (e.target.readyState==4 && e.target.status==200) {
+		var data = JSON.parse(e.target.responseText);
+		
+		var userHtml = "";
+		var table = document.getElementById("tbody");
+		for(var i=0;i<data.length;i++) {
+			console.log(data[i].createTime);
+			var newRow = table.insertRow(i);
+			newRow.insertCell(0).innerHTML = data[i].name;
+			newRow.insertCell(1).innerHTML = data[i].phone;
+			newRow.insertCell(2).innerHTML = data[i].email;
+			newRow.insertCell(3).innerHTML = data[i].score;
+			newRow.insertCell(4).innerHTML = data[i].createTime;
+		}
+		console.log(document.getElementById("user"));
+// 	 	document.getElementById("user").append(userHtml);	
+	}
+});
+</script>
+</body>
+</html>

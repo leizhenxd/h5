@@ -1,0 +1,142 @@
+.ch_answer_a {
+	width: 11%;position: absolute;top: 33%;left:15%;
+}
+.ch_answer_b {
+	width: 11%;position: absolute;top: 47%;left:15%;
+}
+.ch_answer_c {
+	width: 11%;position: absolute;top: 61%;left:15%;
+}
+.ch_answer_d {
+	width: 11%;position: absolute;top: 75%;left:15%;
+}
+.ch_answer3_a {
+	width: 11%;position: absolute;top: 33%;left:15%;
+}
+.ch_answer3_b {
+	width: 11%;position: absolute;top: 54%;left:15%;
+}
+.ch_answer3_c {
+	width: 11%;position: absolute;top: 75%;left:15%;
+}
+
+.ch_checkbox3_a {
+	width: 11%;position: absolute;top: 33%;left:15%;
+}
+.ch_checkbox3_b {
+	width: 11%;position: absolute;top: 54%;left:15%;
+}
+.ch_checkbox3_c {
+	width: 11%;position: absolute;top: 75%;left:15%;
+}
+
+.ch_checkbox_a {
+	width: 11%;position: absolute;top: 33%;left:15%;
+}
+.ch_checkbox_b {
+	width: 11%;position: absolute;top: 47%;left:15%;
+}
+.ch_checkbox_c {
+	width: 11%;position: absolute;top: 61%;left:15%;
+}
+.ch_checkbox_d {
+	width: 11%;position: absolute;top: 75%;left:15%;
+}
+
+.en_answer_a {
+	width: 11%;position: absolute;top: 37%;left:13%;
+}
+.en_answer_b {
+	width: 11%;position: absolute;top: 50%;left:13%;
+}
+.en_answer_c {
+	width: 11%;position: absolute;top: 63%;left:13%;
+}
+.en_answer_d {
+	width: 11%;position: absolute;top: 76%;left:13%;
+}
+.en_answer3_a {
+	width: 11%;position: absolute;top: 37%;left:13%;
+}
+.en_answer3_b {
+	width: 11%;position: absolute;top: 56%;left:13%;
+}
+.en_answer3_c {
+	width: 11%;position: absolute;top: 75%;left:13%;
+}
+
+.en_checkbox3_a {
+	width: 11%;position: absolute;top: 37%;left:13%;
+}
+.en_checkbox3_b {
+	width: 11%;position: absolute;top: 56%;left:13%;
+}
+.en_checkbox3_c {
+	width: 11%;position: absolute;top: 75%;left:13%;
+}
+
+.en_checkbox_a {
+	width: 11%;position: absolute;top: 37%;left:13%;
+}
+.en_checkbox_b {
+	width: 11%;position: absolute;top: 50%;left:13%;
+}
+.en_checkbox_c {
+	width: 11%;position: absolute;top: 63%;left:13%;
+}
+.en_checkbox_d {
+	width: 11%;position: absolute;top: 76%;left:13%;
+}
+
+.ch_finish {
+	background: url('../../images/4c/ch_finish.jpg') no-repeat; background-size: 100% 100%; width: 100%; height: 100%; position: relative;
+}
+.ch_all_right{
+	background: url('../../images/4c/ch_allright.jpg') no-repeat; background-size: 100% 100%; width: 100%; height: 100%; position: relative;
+}
+.en_finish {
+	background: url('../../images/4c/en_finish.jpg') no-repeat; background-size: 100% 100%; width: 100%; height: 100%; position: relative;
+}
+.en_all_right{
+	background: url('../../images/4c/en_allright.jpg') no-repeat; background-size: 100% 100%; width: 100%; height: 100%; position: relative;
+}
+.ch_rightcount {
+	position: absolute;
+	top: 47.5%;
+	left:55%;
+	color: white;
+	font-size: 1.2em;
+	transform:rotate(-7deg);
+	-ms-transform:rotate(-7deg); /* Internet Explorer */
+	-moz-transform:rotate(-7deg); /* Firefox */
+	-webkit-transform:rotate(-7deg); /* Safari 和 Chrome */
+	-o-transform:rotate(-7deg); /* Opera */
+}
+.en_rightcount {
+	position: absolute;
+	top: 47.5%;
+	left:44%;
+	color: white;
+	font-size: 1.2em;
+	transform:rotate(-7deg);
+	-ms-transform:rotate(-7deg); /* Internet Explorer */
+	-moz-transform:rotate(-7deg); /* Firefox */
+	-webkit-transform:rotate(-7deg); /* Safari 和 Chrome */
+	-o-transform:rotate(-7deg); /* Opera */
+}
+
+.ch_prebtn {
+	position: absolute;
+	left: 5%;
+	top: 90%;
+	width: 20%;
+}
+.ch_nextbtn {
+	position: absolute;
+	right: 5%;
+	top: 90%;
+	width: 20%;
+}
+.page {
+	overflow: auto;
+}

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>守护濒危雪豹</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+
+    <!-- Link Swiper's CSS -->
+    <script type="text/javascript" src="http://qiniu.leizhenxd.com/js/jquery-1.8.2.min.js"></script>
+<!--     <script type="text/javascript" src="../../js/jquery-1.8.2.min.js"></script> -->
+    <link rel="stylesheet" href="../../css/swiper.min.css">
+    <link rel="stylesheet" href="../../css/thermos/leopard.css">
+</head>
+<body>
+    <!-- Swiper -->
+    <div class="swiper-container swiper-container-v">
+        <div class="swiper-wrapper">
+          	<div class="swiper-slide swiper-no-swiping pg1">
+          		<div style="width:80%;position: absolute;top: 65%;left:10%;">
+          			<img alt="" src="../../images/thermos/1_words/1a_word1.png" style="width: 70%;opacity: 0" class="ani">
+	          		<img alt="" src="../../images/thermos/1_words/1a_word2.png" style="width: 65%;margin-top: 3%;opacity: 0" class="ani">
+	          		<img alt="" src="../../images/thermos/1_words/1a_word3.png" style="width: 85%;margin-top: 3%;opacity: 0" class="ani">
+	          		<img alt="" src="../../images/thermos/1_words/1a_word4.png" style="width: 75%;margin-top: 3%;opacity: 0" class="ani">
+	          		<img alt="" src="../../images/thermos/1_words/1a_word5.png" style="width: 75%;margin-top: 3%;opacity: 0" class="ani">
+	          		<img alt="" src="../../images/thermos/1_words/1b_word1.png" style="width: 100%;margin-top: 5%;opacity: 0" class="ani">
+	          		<img alt="" src="../../images/thermos/1_words/1b_word2.png" style="width: 100%;margin-top: 5%;opacity: 0" class="ani">
+          		</div>
+          		
+				<div class="preTag-container" style="display: none;">
+					<div class="preTag"></div>
+				</div>
+			</div>
+			
+			<div class="swiper-slide game swiper-no-swiping">
+				<img src="../../images/thermos/store1.jpg" style="position: absolute;top: 0;left: 0;z-index: 9;width: 100%;" class="anistory">
+				<img src="../../images/thermos/store2.jpg" style="position: absolute;top: 0;left: 0;z-index: 9;width: 100%;display: none;" class="anistory">
+				<img src="http://qiniu.leizhenxd.com/2e_bg.jpg?imageView2/2/w/481" style="position: absolute; left: 0; top: 0; width: 100%;height:100%; z-index: 1; visibility: hidden;" id="bb">
+				<img alt="" src="../../images/thermos/2e_product_img1.png" style="width: 35%;position: absolute;left: 10%;top:36%;z-index: 2;opacity: 0" class="ani jdlink">
+				<img alt="" src="../../images/thermos/2e_product_img2.png" style="width: 35%;position: absolute;left: 62%;top:15%;z-index: 2;opacity: 0" class="ani jdlink">
+				<img alt="" src="../../images/thermos/2e_word.png" style="width: 90%;position: absolute;left: 5%;top:50%;z-index: 2;opacity: 0" class="ani">
+				<img src="../../images/thermos/2c_bg.jpg" style="display: none">
+
+				
+				
+				<div style="width:90%;position: absolute;top: 75%;left:5%;z-index: 10">
+          			<img alt="" src="../../images/thermos/2a_word.png" style="width: 100%;opacity: 0;display: none;" class="ani1">
+          			<img alt="" src="../../images/thermos/2b_word.png" style="width: 100%;opacity: 0;display: none;" class="ani1">
+          			<img alt="" src="../../images/thermos/storyword2.png" style="width: 100%;opacity: 1;position: absolute;top: 50%;left:0;" class="anistoryword">
+          			<img alt="" src="../../images/thermos/storyword1.png" style="width: 100%;opacity: 1;display: none;position: absolute;top: 50%;left:0;" class="anistoryword">
+          		</div>
+				<img src="../../images/thermos/2c_guide.png" id="guide" style="z-index: 10;width: 100%;position: absolute;left:0;top: 20%;display: none;">
+				
+				<canvas id="cas"></canvas>
+				<div class="preTag-container" style="display: none;z-index: 9">
+					<div class="preTag"></div>
+				</div>
+			</div>
+			<div class="swiper-slide pg3">
+				<img alt="" src="http://qiniu.leizhenxd.com/3_img1.png?imageView2/2/w/482" style="width: 100%;margin-top: 10%;" class="ani">
+				<img alt="" src="http://qiniu.leizhenxd.com/3_word1.png?imageView2/2/w/480" style="width: 80%;" class="ani">
+	            <div class="preTag-container">
+	                    <div class="preTag"></div>
+	            </div>
+            </div>
+            <div class="swiper-slide pg4">
+				<img alt="" src="http://qiniu.leizhenxd.com/4_word1.png?imageView2/2/w/480" style="width: 80%;margin-top: 10%;" class="ani">
+            	<img alt="" src="http://qiniu.leizhenxd.com/4_img1.png?imageView2/2/w/480" style="width: 70%;margin-top: 20%;" class="ani">
+				<div class="preTag-container">
+					<div class="preTag"></div>
+				</div>
+			</div>
+			<div class="swiper-slide pg5">
+				<img alt="" src="http://qiniu.leizhenxd.com/5_word1.png?imageView2/2/w/480" style="width: 80%;margin-top: 10%;" class="ani">
+            	<img alt="" src="http://qiniu.leizhenxd.com/5_img1.png?imageView2/2/w/480" style="width: 30%;float: left;position: absolute;left: 5%;bottom: 8%;" class="ani">
+				<div class="preTag-container" style="height: 60px">
+					<div class="preTag" style="height: 30px;"></div>
+					<img src="../../images/thermos/togenerate.png" style="width: 65%;margin: 0 auto;">
+				</div>
+			</div>
+			
+            <div class="swiper-slide swiper-no-swiping pg6 noupload">
+            	<input type="file" id="photo" value="" style="display: none;"/>
+            	<div class="swiper-container swiper-container-h" style="height: 100%;">
+			        <div class="swiper-wrapper">
+			            <div class="swiper-slide hpg1">
+			            	<div class="mask-container">
+			            		<img class="camera" alt="" src="../../images/thermos/camera.png">
+				            	<input type="text" class="tobody" maxlength="10" placeholder="XXXXXX" />
+				            	<textarea rows="2" class="content" maxlength="20" placeholder="输入祝福文案，送给你在乎的人。"></textarea>
+				            	<input type="text" class="frombody" maxlength="10" placeholder="XXXXXX"/>
+				            	<img class="right" src="../../images/thermos/right.png">
+			            	</div>
+			            </div>
+			            <div class="swiper-slide hpg2">
+			            	<div class="mask-container">
+			            		<img class="camera" alt="" src="../../images/thermos/camera.png">
+				            	<input type="text" class="tobody" maxlength="10" placeholder="XXXXXX" />
+				            	<textarea rows="2" class="content" maxlength="20" placeholder="输入祝福文案，送给你在乎的人。"></textarea>
+				            	<input type="text" class="frombody" maxlength="10" placeholder="XXXXXX"/>
+				            	<img class="right" src="../../images/thermos/right.png">
+			            	</div>
+			            </div>
+			            <div class="swiper-slide hpg3">
+			            	<div class="mask-container">
+			            		<img class="camera" alt="" src="../../images/thermos/camera.png">
+				            	<input type="text" class="tobody" maxlength="10" placeholder="XXXXXX" />
+				            	<textarea rows="2" class="content" maxlength="20" placeholder="输入祝福文案，送给你在乎的人。"></textarea>
+				            	<input type="text" class="frombody" maxlength="10" placeholder="XXXXXX"/>
+				            	<img class="right" src="../../images/thermos/right.png">
+			            	</div>
+			            </div>
+			            <div class="swiper-slide hpg4">
+			            	<div class="mask-container">
+			            		<img class="camera" alt="" src="../../images/thermos/camera.png">
+				            	<input type="text" class="tobody" maxlength="10" placeholder="XXXXXX" />
+				            	<textarea rows="2" class="content" maxlength="20" placeholder="输入祝福文案，送给你在乎的人。"></textarea>
+				            	<input type="text" class="frombody" maxlength="10" placeholder="XXXXXX"/>
+				            	<img class="right" src="../../images/thermos/right.png">
+			            	</div>
+			            </div>
+			            <div class="swiper-slide hpg5">
+			            	<div class="mask-container">
+			            		<img class="camera" alt="" src="../../images/thermos/camera.png">
+				            	<input type="text" class="tobody" maxlength="10" placeholder="XXXXXX" />
+				            	<textarea rows="2" class="content" maxlength="20" placeholder="输入祝福文案，送给你在乎的人。"></textarea>
+				            	<input type="text" class="frombody" maxlength="10" placeholder="XXXXXX"/>
+				            	<img class="right" src="../../images/thermos/right.png">
+			            	</div>
+			            </div>
+			            <div class="swiper-slide hpg6">
+			            	<div class="mask-container">
+			            		<img class="camera" alt="" src="../../images/thermos/camera.png">
+				            	<input type="text" class="tobody" maxlength="10" placeholder="XXXXXX" />
+				            	<textarea rows="2" class="content" maxlength="20" placeholder="输入祝福文案，送给你在乎的人。"></textarea>
+				            	<input type="text" class="frombody" maxlength="10" placeholder="XXXXXX"/>
+				            	<img class="right" src="../../images/thermos/right.png">
+			            	</div>
+			            </div>
+			        </div>
+    				<div class="swiper-button-next swiper-button-black"></div>
+			        <div class="swiper-button-prev swiper-button-black"></div>
+			    </div> 
+			    <div class="p8-button-wrapper" style="margin-top: 5%;position: absolute;bottom: 9%;z-index: 2;width: 100%;">
+			    	<img id="upload" alt="" src="../../images/thermos/upload.png" width="25%">
+			    	<img id="generate" alt="" src="../../images/thermos/generate.png" width="25%">
+<!--            			<div id="upload"></div> -->
+<!--            			<div id="generate"></div> -->
+            	</div>
+			    <div class="preTag-container" style="height: 50px;z-index: 2;">
+					<div class="preTag" style="height: 30px;"></div>
+					<div style="width: 20%;margin: 0 auto;font-family: 隶书">惊喜好礼</div>
+				</div>
+			</div>
+			<div class="swiper-slide pg7">
+            	<canvas id="haibao" style="width:80%;display:none;margin-top: 3em"></canvas>
+            	<canvas id="haibaoResult" style="width:70%;display:none;margin-top: 3em"></canvas>
+            	<img alt="" id="haibaoimg" src="" style="width:100%;">
+            	<img alt="" src="../../images/thermos/saveTip.png" style="position: absolute;top: 55%;width: 75%;left: 12.5%;">
+            	
+				 <div class="p8-button-wrapper" style="margin-top: 5%;position: absolute;bottom: 9%;z-index: 2;width: 100%;">
+			    	<img id="resubmit" alt="" src="../../images/thermos/resubmit.png" width="27%">
+            	</div>
+			    <div class="preTag-container" style="height: 50px;z-index: 2;">
+					<div class="preTag" style="height: 30px;"></div>
+					<div style="width: 20%;margin: 0 auto;font-family: 隶书">惊喜好礼</div>
+				</div>
+				
+            </div>
+			
+            <div class="swiper-slide pg8 swiper-no-swiping">
+            	<input class="input" type="text" name="name" maxlength="30" size="16" placeholder="姓名" style="margin-top: 52%"/>
+            	<input class="input" type="text" name="email" maxlength="30" size="16" placeholder="邮箱"/>
+            	<input class="input" type="text" name="phone" maxlength="30" size="16" placeholder="联系电话"/>
+            	<div class="p8-button-wrapper">
+           			<div class="prize"></div>
+           			<div class="submit" id="addUser"></div>
+            	</div>
+            	
+            </div>
+            <div class="swiper-slide pg9 swiper-no-swiping">
+            	<img alt="" src="../../images/thermos/successword.png" width="60%" style="margin-top: 25%;">
+            	<div class="p8-button-wrapper" style="margin-top: 30%; height: 50px;">
+           			<div class="prize"></div>
+           			<div class="share"></div>
+           			<div class="store"></div>
+            	</div>
+            </div>
+        </div>
+        <div class='loading'>
+        	<img src='../../images/thermos/6e_full.jpg'width='100%'/>
+        	<img alt="" src="http://qiniu.leizhenxd.com/thermos/loading.gif" style="width: 60%;position: absolute;top: 40%;left:20%;">
+        </div>
+        <div class='prizeMask'>
+        	<img src='../../images/thermos/prize_mask.png' width='100%' style="position: absolute;"/>
+        	<img src="../../images/thermos/close.png" width="10%" class="close" style="position: absolute;left: 20px;top:20px;"/>
+        </div>
+        <div class='shareMask'>
+        	<img src='../../images/thermos/sharemask.png' width='100%' style="position: absolute;"/>
+        	<img src="../../images/thermos/close.png" width="10%" class="close" style="position: absolute;left: 20px;top:20px;"/>
+        </div>
+    </div>
+    <script src="../../js/swiper.min.js"></script>
+    <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+	<script type="text/javascript" src="../../js/wx.js"></script>
+    <script>
+    $("#addUser").click(function(){
+    	var name = $("input[name='name']").val();
+    	var email = $("input[name='email']").val();
+    	var phone = $("input[name='phone']").val();
+    	var valid = true;
+    	if(name == null || name=='' || name=='undefined') {
+    		$("input[name='name']").attr("placeholder","姓名不能为空").css("border","1px solid orange");valid = false;
+    	}
+    	else{
+    		$("input[name='name']").attr("placeholder","姓名").css("border","1px solid gray");
+    	}
+    	if(email == null || email=='') {
+    		$("input[name='email']").attr("placeholder","邮箱不能为空").css("border","1px solid orange");valid = false;
+    	}
+    	else{
+    		$("input[name='email']").attr("placeholder","邮箱").css("border","1px solid gray");
+    	}
+    	if(phone == null || phone=='') {
+    		$("input[name='phone']").attr("placeholder","联系方式不能为空").css("border","1px solid orange");valid = false;
+    	}
+    	else{
+    		$("input[name='phone']").attr("placeholder","联系方式").css("border","1px solid gray");
+    	}
+    	if(valid) {
+    		$.post(
+    			"../../thermos/adduser.htm",
+    			{name: name,email:email,phone:phone},
+    			function(data) {
+    				swiperV.slideNext(0);
+    			}
+    		);
+    	}
+    });
+    $(".prize").click(function(){
+    	$(".prizeMask").show();
+    });
+    $(".share").click(function(){
+    	$(".shareMask").show();
+    });
+    $(".close").click(function(){
+    	$(this).parent().hide();
+    });
+    var over = false;
+    </script>
+    <script type="text/javascript" src="../../js/thermos/leopard.js"></script>
+	
+</body>
+</html>

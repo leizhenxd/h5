@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/mvc
+		http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+		
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">  
+        <property name="messageConverters">  
+            <list>  
+                <bean class="org.springframework.http.converter.StringHttpMessageConverter">  
+                    <property name="supportedMediaTypes">  
+                        <list>  
+                            <value>text/html;charset=UTF-8</value>  
+                        </list>  
+                    </property>  
+                </bean> 
+                <bean id="jsonHttpMessageConverter" class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
+					<!-- 解决 HttpMediaTypeNotAcceptableException: Could not find acceptable representation -->
+					<property name="supportedMediaTypes">
+						<list>
+							<value>text/html;charset=UTF-8</value>
+							<value>text/plain;charset=UTF-8</value>
+							<value>text/json;charset=UTF-8</value>
+						</list>
+					</property>
+				</bean> 
+            </list>  
+        </property>  
+    </bean>
+	<mvc:annotation-driven />
+	<!--  enable autowire  -->
+    <context:annotation-config />
+    <mvc:default-servlet-handler/>
+	<context:component-scan base-package="com.lei.*"></context:component-scan>
+	
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<bean class="com.lei.h5.interceptor.LoginInterceptor"/>
+		</mvc:interceptor>
+	</mvc:interceptors>
+	<!-- Exception handler -->
+	<bean id="exceptionResolver" class="test.CommonHandlerExceptionResolver"/> 
+	<!-- json -->
+ 	<bean name="jsonView" class="org.springframework.web.servlet.view.json.MappingJacksonJsonView"> 
+ 	 
+ 	</bean> 
+	<!--The viewResolver chain for find a view by resourceName -->
+	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+		<property name="defaultContentType" value="application/json" />
+		<property name="mediaTypes">
+			<map>
+				<entry key="html" value="text/html"/>
+				<entry key="json" value="application/json"/>
+				<entry key="xml" value="application/xml"/>
+			</map>
+		</property>
+		<property name="viewResolvers">
+			<list>
+				<!-- for find a view by beanName -->
+    			<bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
+        			<property name="order" value="0"/>
+    			</bean>
+			</list>
+		</property>
+	</bean>
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">  
+        <property name="prefix" value="/"/>  
+        <property name="suffix" value=".html"/>  
+    </bean>
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+	
+	
+</beans>

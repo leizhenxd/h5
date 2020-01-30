@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>three.js webgl - draggable cubes</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <style>
+        body {
+            font-family: Monospace;
+            background-color: #f0f0f0;
+            margin: 0px;
+            overflow: hidden;
+        }
+
+        /*        canvas{
+                    cursor: url('pointer.ico'), auto;
+                }*/
+    </style>
+</head>
+<body>
+
+<script src="libs/three.min.js"></script>
+
+<script src="libs/TrackballControls.js"></script>
+
+<script src="libs/stats.min.js"></script>
+
+<script src="libs/threex.dynamictexture.js"></script>
+
+<div id="hammer"
+     style="height:128px; width:128px; background-image:url('Hammer.png');  position:absolute; bottom:128px; left:0px; z-index:2; backgroundRepeat:no-repeat;"
+     onmousedown="hammerTime()" onmouseup="release()"></div>
+<div id="brush"
+     style="height:128px; width:128px; background-image:url('Brush.png');  position:absolute; bottom:0px; left:0px; z-index:2;backgroundRepeat:no-repeat;"
+     onmousedown="brushTime()" onmouseup="release()"></div>
+<div id="roundh"
+     style="height:128px; width:128px; background-image:url('Round.png');  position:absolute; bottom:128px; left:0px; z-index:3;backgroundRepeat:no-repeat; display: none"
+     onmousedown="hammerTime()" onmouseup="release()"></div>
+<div id="roundb"
+     style="height:128px; width:128px; background-image:url('Round.png');  position:absolute; bottom:0px; left:0px; z-index:3;backgroundRepeat:no-repeat; display: none"
+     onmousedown="brushTime()" onmouseup="release()"></div>
+<script>
+
+    var circleNum = ["①", "②", "③", "④", "⑤", "⑥", "⑦", "⑧", "⑨", "⑩", "⑪", "⑫", "⑬", "⑭", "⑮", "⑯", "⑰", "⑱", "⑲", "⑳"];
+    var container, stats;
+    var camera, controls, scene, renderer;
+    var objects = [];
+    var plane = new THREE.Plane();
+    var raycaster = new THREE.Raycaster();
+    var mouse = new THREE.Vector2(),
+            offset = new THREE.Vector3(),
+            intersection = new THREE.Vector3(),
+            INTERSECTED, SELECTED;
+    var isHammer = false, isBrush = false;
+    init();
+    animate();
+
+    function init() {
+
+        container = document.createElement('div');
+        document.body.appendChild(container);
+
+        camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 10000);
+        camera.position.z = 500;
+
+        controls = new THREE.TrackballControls(camera);
+        controls.rotateSpeed = 1.0;
+        controls.zoomSpeed = 1.2;
+        controls.panSpeed = 0.8;
+        controls.noZoom = false;
+        controls.noPan = false;
+        controls.staticMoving = true;
+        controls.dynamicDampingFactor = 0.3;
+
+        scene = new THREE.Scene();
+
+        /*
+         var axes = new THREE.AxisHelper(200);
+         scene.add(axes);
+         */
+
+        scene.add(new THREE.AmbientLight(0x505050));
+
+        var light = new THREE.SpotLight(0xffffff, 1.5);
+        light.position.set(0, 500, 2000);
+        light.castShadow = true;
+
+        light.shadow = new THREE.LightShadow(new THREE.PerspectiveCamera(50, 1, 200, 10000));
+        light.shadow.bias = -0.00022;
+
+        light.shadow.mapSize.width = 2048;
+        light.shadow.mapSize.height = 2048;
+
+        scene.add(light);
+
+        var geometry = new THREE.BoxGeometry(40, 40, 40);
+
+        //控制器
+        var ctrlGeometry = new THREE.CylinderGeometry(0, 10, 20);//圆锥
+        var objectX = new THREE.Mesh(ctrlGeometry, new THREE.MeshBasicMaterial({color: 0xff0000}));
+        objectX.position.x = 200;
+        objectX.rotation.z = -Math.PI / 2;
+        objectX.uuid = "objectX";
+        var objectX_N = new THREE.Mesh(ctrlGeometry, new THREE.MeshBasicMaterial({color: 0xff0000}));
+        objectX_N.position.x = -200;
+        objectX_N.rotation.z = Math.PI / 2;
+        objectX_N.uuid = "objectX_N";
+        var objectY = new THREE.Mesh(ctrlGeometry, new THREE.MeshBasicMaterial({color: 0x00ff00}));
+        objectY.position.y = 200;
+        objectY.uuid = "objectY";
+        var objectY_N = new THREE.Mesh(ctrlGeometry, new THREE.MeshBasicMaterial({color: 0x00ff00}));
+        objectY_N.position.y = -200;
+        objectY_N.rotation.z = Math.PI;
+        objectY_N.uuid = "objectY_N";
+        var objectZ = new THREE.Mesh(ctrlGeometry, new THREE.MeshBasicMaterial({color: 0x0000ff}));
+        objectZ.position.z = 200;
+        objectZ.rotation.x = Math.PI / 2;
+        objectZ.uuid = "objectZ";
+        var objectZ_N = new THREE.Mesh(ctrlGeometry, new THREE.MeshBasicMaterial({color: 0x0000ff}));
+        objectZ_N.position.z = -200;
+        objectZ_N.rotation.x = -Math.PI / 2;
+        objectZ_N.uuid = "objectZ_N";
+        scene.add(objectX);
+        scene.add(objectY);
+        scene.add(objectZ);
+        scene.add(objectX_N);
+        scene.add(objectY_N);
+        scene.add(objectZ_N);
+        objects.push(objectX);
+        objects.push(objectY);
+        objects.push(objectZ);
+        objects.push(objectX_N);
+        objects.push(objectY_N);
+        objects.push(objectZ_N);
+        for (var z = 0; z < 4; z++) {
+
+            for (var y = 0; y < 5; y++) {
+
+                for (var x = 0; x < 3; x++) {
+
+                    //var object = new THREE.Mesh(geometry, new THREE.MeshLambertMaterial({color: Math.random() * 0xffffff}));
+
+                    //var object = new THREE.Mesh(geometry,  new THREE.MeshBasicMaterial({ color: Math.random() * 0xffffff}));
+
+                    /*                    if (x === 0)
+                     var object = new THREE.Mesh(geometry, this.getMaterial(parseInt((Math.random() * 10)).toString(), "#ffffff", "#5d4a36", 2, 32));
+
+                     else if (x === 1)
+                     var object = new THREE.Mesh(geometry, this.getMaterial(circleNum[parseInt((Math.random() * 10))], "#ffffff", "#5d4a36", 2, 32));
+                     else
+                     var object = new THREE.Mesh(geometry, this.getMaterial(parseInt((Math.random() * 10)).toString(), "#ffffff", "#5d4a36", 2, 32, true));*/
+                    var object = new THREE.Mesh(geometry, sixFace());
+                    object.position.x = (x - 1) * 40 + x;
+                    object.position.y = (y - 2) * 40 + y;
+                    object.position.z = (z - 1.5) * 40 + z;
+
+                    /*            object.position.x = Math.random() * 1000 - 500;
+                     object.position.y = Math.random() * 600 - 300;
+                     object.position.z = Math.random() * 800 - 400;
+
+                     object.rotation.x = Math.random() * 2 * Math.PI;
+                     object.rotation.y = Math.random() * 2 * Math.PI;
+                     object.rotation.z = Math.random() * 2 * Math.PI;
+
+                     object.scale.x = Math.random() * 2 + 1;
+                     object.scale.y = Math.random() * 2 + 1;
+                     object.scale.z = Math.random() * 2 + 1;
+
+                     object.castShadow = true;
+                     object.receiveShadow = true;*/
+
+                    scene.add(object);
+
+                    objects.push(object);
+                }
+            }
+        }
+
+
+        renderer = new THREE.WebGLRenderer({antialias: true});
+        renderer.setClearColor(0xf0f0f0);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.sortObjects = false;
+
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFShadowMap;
+
+        container.appendChild(renderer.domElement);
+
+        var info = document.createElement('div');
+        info.style.position = 'absolute';
+        info.style.top = '10px';
+        info.style.width = '100%';
+        info.style.textAlign = 'center';
+        info.innerHTML = '<a href="http://threejs.org" target="_blank">three.js</a> webgl - draggable cubes';
+        container.appendChild(info);
+
+        stats = new Stats();
+        container.appendChild(stats.dom);
+
+        renderer.domElement.addEventListener('mousemove', onDocumentMouseMove, false);
+        renderer.domElement.addEventListener('mousedown', onDocumentMouseDown, false);
+        renderer.domElement.addEventListener('mouseup', onDocumentMouseUp, false);
+//        renderer.domElement.addEventListener('touchstart', onDocumentMouseDown, false);
+//        renderer.domElement.addEventListener('touchend', onDocumentMouseUp, false);
+
+        window.addEventListener('resize', onWindowResize, false);
+
+    }
+
+    function onWindowResize() {
+
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+    }
+
+    function onDocumentMouseMove(event) {
+
+        event.preventDefault();
+
+        mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+        mouse.y = -( event.clientY / window.innerHeight ) * 2 + 1;
+
+        raycaster.setFromCamera(mouse, camera);
+
+        if (SELECTED) {
+            if (raycaster.ray.intersectPlane(plane, intersection)) {
+                //SELECTED.position.copy(intersection.sub(offset));//控制移动
+                var v = intersection.sub(offset);
+                if (SELECTED.uuid === "objectX") {
+                    if (v.x > -200 && v.x < 200)SELECTED.position.copy(new THREE.Vector3(v.x, SELECTED.position.y, SELECTED.position.z));//控制移动
+                    hiddenCube("x", v.x - 100);
+                }
+                else if (SELECTED.uuid === "objectX_N") {
+                    if (v.x > -200 && v.x < 200)SELECTED.position.copy(new THREE.Vector3(v.x, SELECTED.position.y, SELECTED.position.z));//控制移动
+                    hiddenCube("x_N", v.x + 100);
+                }
+                else if (SELECTED.uuid === "objectY") {
+                    if (v.y > -200 && v.y < 200)SELECTED.position.copy(new THREE.Vector3(SELECTED.position.x, v.y, SELECTED.position.z));//控制移动
+                    hiddenCube("y", v.y - 100);
+                }
+                else if (SELECTED.uuid === "objectY_N") {
+                    if (v.y > -200 && v.y < 200)SELECTED.position.copy(new THREE.Vector3(SELECTED.position.x, v.y, SELECTED.position.z));//控制移动
+                    hiddenCube("y_N", v.y + 100);
+                }
+                else if (SELECTED.uuid === "objectZ") {
+                    if (v.z > -200 && v.z < 200)SELECTED.position.copy(new THREE.Vector3(SELECTED.position.x, SELECTED.position.y, v.z));//控制移动
+                    hiddenCube("z", v.z - 100);
+                }
+                else if (SELECTED.uuid === "objectZ_N") {
+                    if (v.z > -200 && v.z < 200)SELECTED.position.copy(new THREE.Vector3(SELECTED.position.x, SELECTED.position.y, v.z));//控制移动
+                    hiddenCube("z_N", v.z + 100);
+                }
+            }
+
+            return;
+
+        }
+
+        var intersects = raycaster.intersectObjects(objects);
+
+        if (intersects.length > 0) {
+
+            if (INTERSECTED != intersects[0].object) {
+
+                //if (INTERSECTED) INTERSECTED.material.color.setHex(INTERSECTED.currentHex);
+
+                INTERSECTED = intersects[0].object;
+                if (INTERSECTED.material.constructor != THREE.MultiMaterial)
+                    INTERSECTED.currentHex = INTERSECTED.material.color.getHex();
+
+                plane.setFromNormalAndCoplanarPoint(
+                        camera.getWorldDirection(plane.normal),
+                        INTERSECTED.position);
+
+            }
+
+            container.style.cursor = 'pointer';
+
+        } else {
+
+            //if (INTERSECTED) INTERSECTED.material.color.setHex(INTERSECTED.currentHex);
+
+            INTERSECTED = null;
+
+            container.style.cursor = 'auto';
+
+        }
+
+    }
+
+    function onDocumentMouseDown(event) {
+
+        event.preventDefault();
+
+        raycaster.setFromCamera(mouse, camera);
+
+        var intersects = raycaster.intersectObjects(objects);
+
+        if (intersects.length > 0) {
+
+            controls.enabled = false;
+
+            SELECTED = getVisibilityCube(intersects);
+            //SELECTED = intersects[0].object;
+            console.log(SELECTED);
+            console.log(camera);
+            if (raycaster.ray.intersectPlane(plane, intersection)) {
+
+                offset.copy(intersection).sub(SELECTED.position);
+
+            }
+
+            container.style.cursor = 'move';
+
+        }
+
+    }
+    function onDocumentMouseUp(event) {
+
+        event.preventDefault();
+
+        controls.enabled = true;
+
+        if (INTERSECTED) {
+            if (INTERSECTED.material.constructor != THREE.MultiMaterial) {//单一材质
+                if (isHammer && INTERSECTED.uuid.length > 10) {
+                    if (INTERSECTED.material.color.getStyle() == 'rgb(85,85,85)')
+                        return;
+                    scene.remove(INTERSECTED);
+                    objects.remove(INTERSECTED);
+                    console.log(objects);
+                }
+                if (isBrush && INTERSECTED.uuid.length > 10) {
+                    if (INTERSECTED.material.color.getStyle() == 'rgb(85,85,85)')
+                        INTERSECTED.material.color.setStyle('#ffffff');
+                    else
+                        INTERSECTED.material.color.setStyle('#555555');
+                }
+            }
+            else//多重材质
+            {
+                if (isHammer && INTERSECTED.uuid.length > 10) {
+                    if (INTERSECTED.material.materials[0].color.getStyle() == 'rgb(85,85,85)')
+                        return;
+                    scene.remove(INTERSECTED);
+                    objects.remove(INTERSECTED);
+                    console.log(objects);
+                }
+                if (isBrush && INTERSECTED.uuid.length > 10) {
+                    if (INTERSECTED.material.materials[0].color.getStyle() == 'rgb(85,85,85)')
+                        INTERSECTED.material.materials.forEach(function(e){e.color.setStyle('#ffffff')});
+                    else
+                        INTERSECTED.material.materials.forEach(function(e){e.color.setStyle('#555555')});
+                }
+            }
+            SELECTED = null;
+        }
+
+        container.style.cursor = 'auto';
+
+    }
+
+    function getVisibilityCube(list) {
+        for (var i = 0; i < list.length; i++) {
+            if (list[i].object.visible)
+                return list[i].object;
+        }
+        return list[0].object;
+    }
+
+    function hiddenCube(vec, length) {
+        for (var i = 6; i < objects.length; i++) {
+            if (vec === "x" && objects[i].position.x > length)
+                objects[i].visible = false;
+            else if (vec === "x_N" && objects[i].position.x < length)
+                objects[i].visible = false;
+            else if (vec === "y" && objects[i].position.y > length)
+                objects[i].visible = false;
+            else if (vec === "y_N" && objects[i].position.y < length)
+                objects[i].visible = false;
+            else if (vec === "z" && objects[i].position.z > length)
+                objects[i].visible = false;
+            else if (vec === "z_N" && objects[i].position.z < length)
+                objects[i].visible = false;
+            else
+                objects[i].visible = true;
+        }
+    }
+
+    Array.prototype.indexOf = function (val) {
+        for (var i = 0; i < this.length; i++) {
+            if (this[i] == val) return i;
+        }
+        return -1;
+    };
+    Array.prototype.remove = function (val) {
+        var index = this.indexOf(val);
+        if (index > -1) {
+            this.splice(index, 1);
+        }
+    };
+
+    function hammerTime() {
+        isHammer = ~isHammer;
+        isBrush = false;
+        var tool = document.getElementById("hammer");
+        tool.style.backgroundSize = "90% 90%"
+        tool.style.backgroundRepeat = "no-repeat"
+        tool.style.backgroundPosition = "center"
+        console.log("hammerTime~");
+    }
+
+    function brushTime() {
+        isBrush = ~isBrush;
+        isHammer = false;
+        var tool = document.getElementById("brush");
+        tool.style.backgroundSize = "90% 90%"
+        tool.style.backgroundRepeat = "no-repeat"
+        tool.style.backgroundPosition = "center"
+
+        console.log("brushTime~");
+    }
+
+    function release() {
+        var tool = document.getElementById("hammer");
+        tool.style.backgroundSize = "100% 100%"
+        var round = document.getElementById("roundh");
+        round.style.display = isHammer ? "block" : "none";
+        var tool = document.getElementById("brush");
+        tool.style.backgroundSize = "100% 100%"
+        var round = document.getElementById("roundb");
+        round.style.display = isBrush ? "block" : "none";
+    }
+
+    function sixFace() {
+        var mode = [
+            this.getMaterial("", "#ffffff", "#5d4a36", 2, 32),
+            this.getMaterial(parseInt((Math.random() * 10)).toString(), "#ffffff", "#5d4a36", 2, 32),
+            this.getMaterial(circleNum[parseInt((Math.random() * 10))], "#ffffff", "#5d4a36", 2, 32),
+            this.getMaterial(parseInt((Math.random() * 10 + 1)).toString(), "#ffffff", "#5d4a36", 2, 32, true)
+            /*            this.getMaterial("1", "#ffffff", "#5d4a36", 2, 32),
+             this.getMaterial("2", "#ffffff", "#5d4a36", 2, 32),
+             this.getMaterial("3", "#ffffff", "#5d4a36", 2, 32),
+             this.getMaterial("4", "#ffffff", "#5d4a36", 2, 32),
+             this.getMaterial("5", "#ffffff", "#5d4a36", 2, 32),
+             this.getMaterial("6", "#ffffff", "#5d4a36", 2, 32),*/
+        ];
+        var mats = [];
+        for (var i = 0; i < 6; i++) {
+            mats.push(mode[parseInt(Math.random() * 4)]);
+        }
+        return new THREE.MeshFaceMaterial(mats);
+    }
+
+    function animate() {
+
+        requestAnimationFrame(animate);
+
+        render();
+        stats.update();
+
+    }
+
+    function render() {
+
+        controls.update();
+        renderer.render(scene, camera);
+
+    }
+
+    /**
+     * 写数字
+     * @param text 数字
+     * @param background 背景色
+     * @param borderColor 边框颜色
+     * @param borderWidth 边框宽度
+     * @param width canvar 宽度
+     * @param rect 是否是方框数字
+     * @returns {THREE.MeshBasicMaterial}
+     */
+    function getMaterial(text, background, borderColor, borderWidth, width, isRect) {
+
+        var dynamicTexture = new THREEx.DynamicTexture(width, width);
+        dynamicTexture.context.font = "bold " + (0.8 * width) + "px '楷体'";
+        dynamicTexture.clearWithBorder(background, borderColor, borderWidth);
+        dynamicTexture.drawTextCooked(text, {
+            lineHeight: 0.7,
+            align: "center",
+            fillStyle: "black",
+            isRect: isRect,
+        });
+
+        var material = new THREE.MeshBasicMaterial({
+            map: dynamicTexture.texture
+        });
+        return material;
+    }
+
+</script>
+
+</body>
+</html>

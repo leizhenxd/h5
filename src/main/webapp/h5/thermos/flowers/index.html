@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>花吃大作战</title>
+    <!--<link rel="icon" type="image/GIF" href="res/favicon.ico"/>-->
+    <div id='wx_logo' style='margin:0 auto;display:none;'>
+        <!--<img src='/res/head.jpg' />-->
+    </div>
+    <meta name="viewport" content="initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="full-screen" content="yes"/>
+    <meta name="screen-orientation" content="portrait"/>
+    <meta name="x5-fullscreen" content="true"/>
+    <meta name="360-fullscreen" content="true"/>
+    <style>
+        body, canvas, div {
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            -khtml-user-select: none;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        }
+        .input_control{
+           width:100%;
+           position: absolute;
+           top: 0;
+           left: 0;
+           height: 70%;
+           text-align: center;
+           display: none;
+        }
+        input[type="text"],input[type="number"],input[type="email"]{
+            text-align:left;
+            font-size:1.4em;
+            height:10%;
+            width:70%;
+            border-radius:13px;
+            border:4px solid #c8cccf;
+            color:#6a6f77;
+            -web-kit-appearance:none;
+            -moz-appearance: none;
+            margin: 5% auto;
+            padding:0 0.5em;
+            text-decoration:none;
+        }
+        /*input[type="text"],input[type="number"],input[type="email"]:focus{*/
+            /*border:3px solid #ff7496;*/
+        /*}*/
+    </style>
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+	<script>
+	  (adsbygoogle = window.adsbygoogle || []).push({
+		google_ad_client: "ca-pub-2093034756983913",
+		enable_page_level_ads: true
+	  });
+	</script>
+</head>
+<body style="padding:0; margin: 0; background: #000;">
+
+<script src="res/loading.js"></script>
+<canvas id="gameCanvas" width="480" height="720"></canvas>
+<div class="input_control" id="input_control">
+    <!--<input type="text" id="nametxt" class="form_input" placeholder="姓名" style="position:absolute;top:20%;left:40px;display: none;"/>-->
+    <!--<input type="number" pattern="[0-9]*" id="phonetxt" class="form_input" placeholder="手机号" style="position:absolute;top:245px;left:40px;display: none;"/>-->
+    <!--<input type="email" id="emailtxt" class="form_input" placeholder="邮箱" style="position:absolute;top:320px;left:40px;display: none;"/>-->
+    <input type="text" id="nametxt" class="form_input" placeholder="姓名" style="margin-top: 50%;"/>
+    <input type="number" pattern="[0-9]*" id="phonetxt" class="form_input" placeholder="手机号" />
+    <input type="email" id="emailtxt" class="form_input" placeholder="邮箱" />
+</div>
+<div style="display:none;width:100%;height:50%;position:absolute;top:0;overflow: hidden;" id="changan">
+	<img src="res/mask.png" width="100%" height="100%"/>
+</div>
+<script>
+    (function () {
+        var nav = window.navigator;
+        var ua = nav.userAgent.toLowerCase();
+        var uaResult = /android (\d+(?:\.\d+)+)/i.exec(ua) || /android (\d+(?:\.\d+)+)/i.exec(nav.platform);
+        if (uaResult) {
+            var osVersion = parseInt(uaResult[1]) || 0;
+            var browserCheck = ua.match(/(qzone|micromessenger|qqbrowser)/i);
+            if (browserCheck) {
+                var gameCanvas = document.getElementById("gameCanvas");
+                var ctx = gameCanvas.getContext('2d');
+                ctx.fillStyle = '#000000';
+                ctx.fillRect(0, 0, 1, 1);
+            }
+        }
+    })();
+</script>
+<!--<script cocos src="http://qiniu.leizhenxd.com/cocos2d-js-v3.13.js"></script>-->
+<script cocos src="cocos2d-js-v3.13.js"></script>
+<script cocos src="src/resource.js"></script>
+<script cocos src="src/CustomLoaderScene.js"></script>
+<script cocos src="main.js"></script><script cocos src="src/app.js"></script>
+<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="../../../js/wx-sdk.js"></script>
+<script src="../../../js/statistic.js"></script>
+<script>
+	wxShare({
+		shareUrl : window.location.href,
+		shareTitle : "一起花吃大作战",
+		shareDesc : "一起花吃大作战",
+		shareImg : "http://h5.leizhenxd.com/h5/thermos/flowers/res/shareimg.jpg",
+		pageType: "thermos_flowers",
+		callback : function(){
+			visit("thermos_flowers","thermos_flowers_share");
+		}
+	});
+	visit("thermos_flowers","thermos_flowers_visit");
+</script>
+</body>
+</html>

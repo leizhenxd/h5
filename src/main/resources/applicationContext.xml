@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd 
+	http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+	http://www.springframework.org/schema/aop
+	http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+	http://www.springframework.org/schema/task 
+    http://www.springframework.org/schema/task/spring-task-3.0.xsd
+	http://www.springframework.org/schema/tx
+	http://www.springframework.org/schema/tx/spring-tx-2.5.xsd"
+	default-lazy-init="true">
+	
+	<context:component-scan base-package="com.lei.*"></context:component-scan>
+	<util:properties id="settings" location="classpath:config.properties"/>
+	<context:property-placeholder location="classpath:config.properties"/>
+	
+	<bean id="mysqldataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close" lazy-init="false">
+		<property name="driverClassName" value="#{settings['dataSource.driverClassName']}" />
+		<property name="url" value="#{settings['dataSource.master.url']}" />
+		<property name="username" value="#{settings['dataSource.master.username']}" />
+		<property name="password" value="#{settings['dataSource.master.password']}" />
+		<property name="initialSize" value="#{settings['dataSource.master.initialPoolSize']}" />
+		<property name="maxActive" value="#{settings['dataSource.master.maxPoolSize']}" />
+		<property name="maxWait" value="#{settings['dataSource.master.maxIdleTime']}" />
+		<property name="poolPreparedStatements" value="true" />
+		<property name="validationQuery" value="select 1 " />
+	</bean>
+    <bean id="mysqljdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">  
+        <property name="dataSource">  
+            <ref local="mysqldataSource" />  
+        </property>  
+    </bean>
+	
+	
+	
+    <bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">  
+	  <property name="sessionFactory" ref="sessionFactory"/>  
+	</bean>
+	<!-- 定义数据源Bean-->  
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">   
+        <!-- 指定连接数据库的驱动 -->  
+        <property name="driverClassName" value="org.sqlite.JDBC" />  
+        <!-- 指定连接数据库的URL -->  
+        <property name="url" value="jdbc:sqlite:${dbpath}" />
+        <property name="connectionProperties">
+        	<props>
+        		<prop key="date_string_format">yyyy-MM-dd HH:mm:ss</prop>
+        	</props>
+        </property>
+    </bean> 
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">  
+        <property name="dataSource">  
+            <ref local="dataSource" />  
+        </property>  
+    </bean>
+</beans>
