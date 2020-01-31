@@ -91,7 +91,7 @@ function callback() {
 		var response = JSON.parse(wxconfig.xmlhttp.responseText);
 		console.log(response);
 		wx.config({
-			debug : true,
+			debug : false,
 			appId : response.appid,
 			timestamp : response.timestamp,
 			nonceStr : response.nonceStr,
