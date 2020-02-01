@@ -83,7 +83,7 @@ public class WXAppUploader {
 			MediaOperator.download(serverId, path + fileName);
 			float result;
 			try {
-				System.out.println(LowBattery.instance);
+				log.info("percent:{}", percent);
 				LowBattery.instance.setBasePath(settings.getProperty("assert.path"));
 				result = LowBattery.instance.processScreenShot(path + fileName, settings.getProperty("static.path") + "wxapp/"+pageType+"/result/" + fileName, percent);
 		        if(result < 0) {
@@ -103,7 +103,7 @@ public class WXAppUploader {
 			}finally {
 				new File(path + fileName).delete();
 			}
-	        log.info("上传文件结果:{}，percent:{}", settings.getProperty("static.url.pre")+"wxapp/"+pageType+"/result/"+ fileName,percent);
+	        log.info("上传文件结果:{}", settings.getProperty("static.url.pre")+"wxapp/"+pageType+"/result/"+ fileName);
 			return settings.getProperty("static.url.pre")+"wxapp/"+pageType+"/result/"+ fileName;
 		} catch (Exception e2) {
 			e2.printStackTrace();
