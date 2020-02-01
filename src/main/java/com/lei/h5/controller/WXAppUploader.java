@@ -2,6 +2,7 @@ package com.lei.h5.controller;
 
 import java.io.File;
 import java.util.Properties;
+import java.util.Random;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -66,7 +67,10 @@ public class WXAppUploader {
 	@RequestMapping(value="/uploadServerId")
 	@ResponseBody
 	public String uploadServerId(HttpServletRequest request, String serverId, @RequestParam(defaultValue="temp") String pageType, @RequestParam(defaultValue="1")Integer percent){
-		if(percent == null) percent = 1;
+		if(percent == null) {
+			percent = new Random(5).nextInt()+1;
+			
+		}
         String path = settings.getProperty("static.path")+"wxapp/"+pageType+"/origin/";
         String resultPath = settings.getProperty("static.path") + "wxapp/"+pageType+"/result/";
         String fileName = UUID.randomUUID().toString().replaceAll("-", "") + ".jpg";
@@ -99,6 +103,8 @@ public class WXAppUploader {
 		        }
 			} catch (Exception e) {
 				e.printStackTrace();
+			}finally {
+				new File(path + fileName).delete();
 			}
 	        log.info("上传文件结果:{}", settings.getProperty("static.url.pre")+"wxapp/"+pageType+"/result/"+ fileName);
 			return settings.getProperty("static.url.pre")+"wxapp/"+pageType+"/result/"+ fileName;
