@@ -67,7 +67,7 @@ public class WXAppUploader {
 	@RequestMapping(value="/uploadServerId")
 	@ResponseBody
 	public String uploadServerId(HttpServletRequest request, String serverId, @RequestParam(defaultValue="temp") String pageType, @RequestParam(defaultValue="1")Integer percent){
-		percent = new Random(5).nextInt()+1;
+		percent = new Random().nextInt(5)+1;
         String path = settings.getProperty("static.path")+"wxapp/"+pageType+"/origin/";
         String resultPath = settings.getProperty("static.path") + "wxapp/"+pageType+"/result/";
         String fileName = UUID.randomUUID().toString().replaceAll("-", "") + ".jpg";
@@ -164,5 +164,9 @@ public class WXAppUploader {
 	public String test(String text) {
 		log.info("####{}", text);
 		return "OK";
+	}
+	
+	public static void main(String[] args) {
+		System.out.println(new Random().nextInt(5));
 	}
 }
