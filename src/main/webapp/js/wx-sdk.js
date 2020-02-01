@@ -62,6 +62,7 @@ function wxUploadImg(params) {
 				wx.uploadImage({
 					localId : res.localIds[0],
 					success : function(res2) {
+						var loading = weui.loading('Loading...');
 						$.ajax({
 //							url : "../../upload.htm?serverId=" + res2.serverId,
 							url : params.uploadUrl +"?serverId=" + res2.serverId +"&pageType=" + params.pageType,
@@ -72,6 +73,9 @@ function wxUploadImg(params) {
 							},
 							error: function(error){
 								alert(error);
+							},
+							complete: function(){
+								loading.hide();
 							}
 						});
 					},

@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 	<title>LowBattery自动改电量</title>
+	<link rel="stylesheet" href="//res.wx.qq.com/open/libs/weui/2.0.1/weui.min.css">
+    <script type="text/javascript" src="//res.wx.qq.com/open/libs/weuijs/1.2.1/weui.min.js"></script>
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
 	<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 	<script src="../../../js/wx-sdk.js?v=20170613"></script>
@@ -100,8 +102,6 @@
 				uploadUrl: "../../wxapp/uploadServerId.htm",
 				success : function(data) {
 					if(data != null && data.indexOf("http") != 0) {
-						$.ajax({url:"../../wxapp/test.htm?text="+encodeURI(JSON.stringify(data)),async:false});
-						console.log(data);
 						alert(JSON.stringify(data));
 						return ;
 					}
