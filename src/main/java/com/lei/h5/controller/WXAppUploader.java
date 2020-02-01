@@ -103,7 +103,7 @@ public class WXAppUploader {
 			}finally {
 				new File(path + fileName).delete();
 			}
-	        log.info("上传文件结果:{}", settings.getProperty("static.url.pre")+"wxapp/"+pageType+"/result/"+ fileName);
+	        log.info("上传文件结果:{}，percent:{}", settings.getProperty("static.url.pre")+"wxapp/"+pageType+"/result/"+ fileName,percent);
 			return settings.getProperty("static.url.pre")+"wxapp/"+pageType+"/result/"+ fileName;
 		} catch (Exception e2) {
 			e2.printStackTrace();
