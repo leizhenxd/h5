@@ -62,7 +62,7 @@ function wxUploadImg(params) {
 				wx.uploadImage({
 					localId : res.localIds[0],
 					success : function(res2) {
-						var loading = weui.loading('Loading...');
+						var loading = weui.loading('正在处理.');
 						$.ajax({
 //							url : "../../upload.htm?serverId=" + res2.serverId,
 							url : params.uploadUrl +"?serverId=" + res2.serverId +"&pageType=" + params.pageType,
