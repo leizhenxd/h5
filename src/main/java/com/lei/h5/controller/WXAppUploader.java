@@ -107,8 +107,8 @@ public class WXAppUploader {
 			return settings.getProperty("static.url.pre")+"wxapp/"+pageType+"/result/"+ fileName;
 		} catch (Exception e2) {
 			e2.printStackTrace();
+			log.error("{}", e2);
 		}
-        
         
 		return fileName;
 	}
