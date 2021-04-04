@@ -100,6 +100,7 @@ public class WXAppUploader {
 		        }
 			} catch (Exception e) {
 				e.printStackTrace();
+				log.error("{}", e);
 			}finally {
 				new File(path + fileName).delete();
 			}
