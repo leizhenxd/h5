@@ -44,16 +44,17 @@ public class WXAppUploader {
             file.transferTo(targetFile);  
         } catch (Exception e) {  
             e.printStackTrace();  
+            log.error("{}", e);
         }
        
         float result;
 		try {
-			System.out.println("set base path"+settings.getProperty("assert.path"));
+			log.info("set base path"+settings.getProperty("assert.path"));
 			System.out.println(LowBattery.instance);
 			LowBattery.instance.setBasePath(settings.getProperty("assert.path"));
-			System.out.println("set base path end");
+			log.info("set base path end");
 			result = LowBattery.instance.processScreenShot(settings.getProperty("static.path") + "wxapp/lowbattery/origin/" + fileName, settings.getProperty("static.path") + "wxapp/lowbattery/result/" + fileName, 4);
-			System.out.println(settings.getProperty("static.path")+"wxapp/lowbattery/result/"+ fileName);
+			log.info(settings.getProperty("static.path")+"wxapp/lowbattery/result/"+ fileName);
 	        if(result < 0) {
 	        	return "fail";
 	        }
