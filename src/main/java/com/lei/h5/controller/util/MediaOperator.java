@@ -18,7 +18,7 @@ import com.google.gson.Gson;
 
 public class MediaOperator {
 	private static Logger log = LoggerFactory.getLogger(MediaOperator.class);
-	static String url = "http://file.api.weixin.qq.com/cgi-bin/media/get?access_token=ACCESS_TOKEN&media_id=MEDIA_ID";
+	static String url = "https://file.api.weixin.qq.com/cgi-bin/media/get?access_token=ACCESS_TOKEN&media_id=MEDIA_ID";
 	private static String downloadUrl = "https://api.weixin.qq.com/cgi-bin/media/upload?access_token=ACCESS_TOKEN&type=image";
 
 	public static void download(String serverId, String path) throws Exception {
